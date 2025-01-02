@@ -2,10 +2,8 @@ import React from "react";
 import { CgWorkAlt } from "react-icons/cg";
 import { FaReact } from "react-icons/fa";
 import { LuGraduationCap } from "react-icons/lu";
-import corpcommentImg from "@/public/corpcomment.png";
-import rmtdevImg from "@/public/rmtdev.png";
-import wordanalyticsImg from "@/public/wordanalytics.png";
-
+import MarketingCloudEmailSpecialist_Dany from "@/public/MarketingCloudEmailSpecialist_Dany.jpg";
+import MarketingCloudDeveloper_Dany from "@/public/MarketingCloudDeveloper_Dany.jpg";
 export const links = [
   {
     name: "Home",
@@ -16,8 +14,8 @@ export const links = [
     hash: "#about",
   },
   {
-    name: "Projects",
-    hash: "#projects",
+    name: "Certifications",
+    hash: "#certifications",
   },
   {
     name: "Skills",
@@ -35,73 +33,85 @@ export const links = [
 
 export const experiencesData = [
   {
-    title: "Graduated bootcamp",
-    location: "Miami, FL",
-    description:
-      "I graduated after 6 months of studying. I immediately found a job as a front-end developer.",
+    title: "Bachelor Degree in Marketing",
+    location: "University of Aveiro, Portugal",
+    description:"",    
     icon: React.createElement(LuGraduationCap),
-    date: "2019",
+    date: "2017-2020",
   },
   {
-    title: "Front-End Developer",
-    location: "Orlando, FL",
+    title: "Digital Marketing Intern",
+    location: "Hey Digital Ventures",
     description:
-      "I worked as a front-end developer for 2 years in 1 job and 1 year in another job. I also upskilled to the full stack.",
+      "First experience, managing different clients in a digital marketing agency environment (WordPress, Social media ads and copywriting, SEO).",
     icon: React.createElement(CgWorkAlt),
-    date: "2019 - 2021",
+    date: "2021",
   },
   {
-    title: "Full-Stack Developer",
-    location: "Houston, TX",
+    title: "Postgraduate degree in Digital Marketing",
+    location: "IPAM, Porto",
+    description:"",
+    icon: React.createElement(LuGraduationCap),
+    date: "2022",
+  },
+  {
+    title: "Campaign Specialist",
+    location: "VML MAP",
     description:
-      "I'm now a full-stack developer working as a freelancer. My stack includes React, Next.js, TypeScript, Tailwind, Prisma and MongoDB. I'm open to full-time opportunities.",
-    icon: React.createElement(FaReact),
-    date: "2021 - present",
+    "Creating and implementing HTML e-mails, with accurate targets through SQL and Adobe workflows. Working with Salesforce Marketing Cloud and Adobe Campaign Standard.",
+    icon: React.createElement(CgWorkAlt),
+    date: "2022",
+  },
+  {
+    title: "Master’s degree in Marketing and Innovation",
+    location: "IADE - School of Design, Technology, and Communication, Lisbon",
+    description:"",    
+    icon: React.createElement(LuGraduationCap),
+    date: "2022-2024",
+  },
+  {
+    title: "Senior Solution Expert",
+    location: "VML MAP",
+    description:
+    "Managing and resolving technical issues in Salesforce Marketing Cloud. Implementing data-driven solutions, leading technical projects, and collaborating with global cross-functional teams.",
+    icon: React.createElement(CgWorkAlt),
+    date: "2023 - 2025",
+  },
+  {
+    title: "Salesforce Marketing Cloud Consultant",
+    location: "Making Science, Madrid",
+    description:
+    "Focused on Salesforce Marketing Cloud, Data Cloud and Personalization. Providing clients a holistic CRM experience.",
+    icon: React.createElement(CgWorkAlt),
+    date: "2025 - Present",
   },
 ] as const;
 
 export const projectsData = [
   {
-    title: "CorpComment",
+    title: "Salesforce Marketing Cloud Email Specialist",
     description:
-      "I worked as a full-stack developer on this startup project for 2 years. Users can give public feedback to companies.",
-    tags: ["React", "Next.js", "MongoDB", "Tailwind", "Prisma"],
-    imageUrl: corpcommentImg,
+      "Completed in September 2023.",
+    tags: ["Email Studio","A/B Testing", "Automation Studio", "Journey Builder"],
+    imageUrl: MarketingCloudEmailSpecialist_Dany,
   },
   {
-    title: "rmtDev",
+    title: "Salesforce Marketing Cloud Developer",
     description:
-      "Job board for remote developer jobs. I was the front-end developer. It has features like filtering, sorting and pagination.",
-    tags: ["React", "TypeScript", "Next.js", "Tailwind", "Redux"],
-    imageUrl: rmtdevImg,
-  },
-  {
-    title: "Word Analytics",
-    description:
-      "A public web app for quick analytics on text. It shows word count, character count and social media post limits.",
-    tags: ["React", "Next.js", "SQL", "Tailwind", "Framer"],
-    imageUrl: wordanalyticsImg,
+      "Completed in September 2024.",
+    tags: ["AMPscript", "SQL", "REST API", "SOAP API","SSJS"],
+    imageUrl: MarketingCloudDeveloper_Dany,
   },
 ] as const;
 
 export const skillsData = [
   "HTML",
   "CSS",
+  "SQL",
+  "AMPscript",
   "JavaScript",
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "Git",
-  "Tailwind",
-  "Prisma",
-  "MongoDB",
-  "Redux",
-  "GraphQL",
-  "Apollo",
-  "Express",
-  "PostgreSQL",
-  "Python",
-  "Django",
-  "Framer Motion",
+  "Salesforce Marketing Cloud",
+  "Salesforce Data Cloud",
+  "Salesforce Personalization",
+  "Adobe Campaign Standard",
 ] as const;
