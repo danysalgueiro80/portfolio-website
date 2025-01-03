@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="mb-10 px-4 text-center text-gray-500">
       <small className="mb-2 block text-xs">
-        &copy; 2025 Dany. All rights reserved.
+        &copy; 2025 Dany Salgueiro. All rights reserved.
       </small>
       <p className="text-xs">This website was built with
         <span className="font-semibold"> React & Next.js (App Router & Server Actions), TypeScript, Tailwind CSS,
