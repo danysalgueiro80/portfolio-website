@@ -10,8 +10,8 @@ import { Toaster } from "react-hot-toast";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Dany Salgueiro | Personal Website",
-  description: "Dany is a Salesforce Consultant with 4 years of experience.",
+  title: "Dany Salgueiro | Salesforce Consultant",
+  description: "Dany is a Salesforce Consultant with 3 years of experience.",
 };
 
 export default function RootLayout({
