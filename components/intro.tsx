@@ -64,8 +64,8 @@ export default function Intro() {
       >
         <span className="font-bold">Hello, I'm Dany.</span> I'm a{" "}
         <span className="font-bold">Salesforce Marketing Cloud consultant</span> with{" "}
-        <span className="font-bold">4 years</span> of experience. I enjoy
-        building <span className="italic">campaign targets & workflows</span>. My focus is{" "}
+        <span className="font-bold">3 years</span> of experience. I enjoy
+        building campaign targets with SQL, setting up beautiful customer journeys, and developing personalized HTML emails. My focus is{" "}
         <span className="underline">Salesforce Marketing Cloud</span>.
       </motion.h1>
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-2 px-4 text-lg font-medium"
