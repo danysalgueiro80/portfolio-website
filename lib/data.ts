@@ -41,7 +41,7 @@ export const experiencesData = [
   },
   {
     title: "Digital Marketing Intern",
-    location: "Hey Digital Ventures",
+    location: "Hey Digital Ventures - Remote",
     description:
       "First experience, managing different clients in a digital marketing agency environment (WordPress, Social media ads and copywriting, SEO).",
     icon: React.createElement(CgWorkAlt),
@@ -56,7 +56,7 @@ export const experiencesData = [
   },
   {
     title: "Campaign Specialist",
-    location: "VML MAP",
+    location: "VML MAP - Lisbon",
     description:
     "Creating and implementing HTML e-mails, with accurate targets through SQL and Adobe workflows. Working with Salesforce Marketing Cloud and Adobe Campaign Standard.",
     icon: React.createElement(CgWorkAlt),
@@ -71,7 +71,7 @@ export const experiencesData = [
   },
   {
     title: "Senior Solution Expert",
-    location: "VML MAP",
+    location: "VML MAP - Lisbon",
     description:
     "Managing and resolving technical issues in Salesforce Marketing Cloud. Implementing data-driven solutions, leading technical projects, and collaborating with global cross-functional teams.",
     icon: React.createElement(CgWorkAlt),
@@ -79,7 +79,7 @@ export const experiencesData = [
   },
   {
     title: "Salesforce Marketing Cloud Consultant",
-    location: "Making Science, Madrid",
+    location: "Making Science - Madrid",
     description:
     "Focused on Salesforce Marketing Cloud, Data Cloud and Personalization. Providing clients a holistic CRM experience.",
     icon: React.createElement(CgWorkAlt),
@@ -110,6 +110,7 @@ export const skillsData = [
   "SQL",
   "AMPscript",
   "JavaScript",
+  "APIs"
   "Salesforce Marketing Cloud",
   "Salesforce Data Cloud",
   "Salesforce Personalization",
