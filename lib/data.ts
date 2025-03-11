@@ -110,7 +110,7 @@ export const skillsData = [
   "SQL",
   "AMPscript",
   "JavaScript",
-  "APIs"
+  "APIs",
   "Salesforce Marketing Cloud",
   "Salesforce Data Cloud",
   "Salesforce Personalization",
