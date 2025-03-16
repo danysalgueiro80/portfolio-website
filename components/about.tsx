@@ -20,7 +20,7 @@ export default function About() {
       <SectionHeading>About me</SectionHeading>
       <p className="mb-3">
       I am a portuguese tech enthusiast, currently based in{" "}
-      <span className="font-medium">Madrid</span>{" "}, with a strong passion for the
+      <span className="font-medium">Madrid</span>, with a strong passion for the
       {" "}
         <span className="font-medium">Salesforce</span> ecosystem.
       </p>
