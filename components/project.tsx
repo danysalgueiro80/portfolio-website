@@ -16,6 +16,26 @@ export default function Project({
 }: ProjectProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+
+  // Add ESC key handler
+  useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && isModalOpen) {
+        setIsModalOpen(false);
+      }
+    };
+
+    // Add event listener when modal is open
+    if (isModalOpen) {
+      document.addEventListener("keydown", handleEscKey);
+    }
+
+    // Cleanup function to remove event listener
+    return () => {
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [isModalOpen]);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["0 1", "1.33 1"],
@@ -27,13 +47,8 @@ export default function Project({
   useEffect(() => {
     const header = document.querySelector('header');
     if (header) {
-      if (isModalOpen) {
-        header.style.display = 'none';
-      } else {
-        header.style.display = 'block';
-      }
+      header.style.display = isModalOpen ? 'none' : 'block';
     }
-    // Cleanup function to ensure header is shown when component unmounts
     return () => {
       if (header) {
         header.style.display = 'block';
@@ -69,6 +84,7 @@ export default function Project({
             </ul>
           </div>
 
+          {/* Card Image */}
           <div 
             onClick={() => setIsModalOpen(true)}
             className="cursor-pointer"
@@ -77,60 +93,72 @@ export default function Project({
               src={imageUrl}
               alt="Project I worked on"
               quality={95}
+              priority={true}
               className="absolute hidden sm:block top-8 -right-40 w-[28.25rem] rounded-t-lg shadow-2xl
-            transition 
-            group-hover:scale-[1.04]
-            group-hover:-translate-x-3
-            group-hover:translate-y-3
-            group-hover:-rotate-2
+              transition 
+              group-hover:scale-[1.04]
+              group-hover:-translate-x-3
+              group-hover:translate-y-3
+              group-hover:-rotate-2
 
-            group-even:group-hover:translate-x-3
-            group-even:group-hover:translate-y-3
-            group-even:group-hover:rotate-2
+              group-even:group-hover:translate-x-3
+              group-even:group-hover:translate-y-3
+              group-even:group-hover:rotate-2
 
-            group-even:right-[initial] group-even:-left-40"
+              group-even:right-[initial] group-even:-left-40"
             />
           </div>
         </section>
       </motion.div>
 
+      {/* Modal */}
       <AnimatePresence>
         {isModalOpen && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 cursor-pointer"
-            onClick={() => setIsModalOpen(false)}
-          >
-            <motion.div 
-              className="relative max-w-[90%] max-h-[90%]"
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.5, opacity: 0 }}
-              transition={{ duration: 0.3, type: "spring", stiffness: 300, damping: 25 }}
-            >
-              <motion.button
-                className="absolute top-4 right-4 text-[#579ED8] hover:text-[#579ED8]/70 transition-colors backdrop-blur-sm rounded-full p-2"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsModalOpen(false);
-                }}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <IoClose size={24} />
-              </motion.button>
-              <Image
-                src={imageUrl}
-                alt={title}
-                quality={95}
-                className="w-auto h-auto max-w-full max-h-[90vh] rounded-lg"
+          <>
+            {/* Animated overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.1 }}
+              className="fixed inset-0 bg-black/95 z-40"
+              onClick={() => setIsModalOpen(false)}
+            />
+
+            {/* Static content container */}
+            <div className="fixed inset-0 z-50 flex items-center justify-center">
+              <div 
+                className="relative w-full max-w-4xl mx-auto px-4"
                 onClick={(e) => e.stopPropagation()}
-              />
-            </motion.div>
-          </motion.div>
+              >
+                <div className="relative">
+                  <Image
+                    src={imageUrl}
+                    alt={title}
+                    width={1200}
+                    height={800}
+                    className="rounded-lg"
+                    priority={true}
+                    style={{ 
+                      maxWidth: '100%',
+                      height: 'auto',
+                      maxHeight: '80vh',
+                      objectFit: 'contain'
+                    }}
+                  />
+                  <button
+                    className="absolute top-4 right-4 text-[#579ED8] hover:text-[#579ED8]/70 transition-colors backdrop-blur-sm rounded-full p-2"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsModalOpen(false);
+                    }}
+                  >
+                    <IoClose size={24} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </>
         )}
       </AnimatePresence>
     </>
