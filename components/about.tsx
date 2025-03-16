@@ -19,16 +19,16 @@ export default function About() {
     >
       <SectionHeading>About me</SectionHeading>
       <p className="mb-3">
-      I am a portuguese young adult, currently based in{" "}
-      <span className="font-medium">Madrid</span>{" "}🇪🇸, with a strong passion for the
+      I am a portuguese tech enthusiast, currently based in{" "}
+      <span className="font-medium">Madrid</span>{" "}, with a strong passion for the
       {" "}
         <span className="font-medium">Salesforce</span> ecosystem.
       </p>
       <p className="mb-3">
-      My journey into technology began during my academic path, which was primarily focused on marketing. I discovered that CRM perfectly bridges the gap between Marketing and Technology, and it has become my favorite area to explore. I thrive on learning something new every day and enjoy challenging myself—whether it's solving complex problems or experimenting with new tools, such as those I used while developing this website. The satisfaction of untangling a tricky issue and finding its solution is truly rewarding.
+      My journey into technology started with a background in marketing, where I quickly realized that CRM was the perfect bridge between business and tech. Since then, I’ve been diving deeper into the world of data, marketing automation and problem-solving. I love the challenge of untangling complex issues, learning new tools, and constantly pushing myself to improve, and this website is just one of the many projects where I get to explore new technologies and skills.
       </p>
       <p className="mb-3">
-      When it’s time to relax, you’ll find me playing video games, reading books, or hanging out with friends — though getting me out of the house can be a difficult task sometimes.
+      When it’s time to relax, you’ll probably find me playing video games, reading, or just enjoying some downtime with family and friends.
       </p>
 
     </motion.section>
