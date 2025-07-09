@@ -107,13 +107,11 @@ export const projectsData = [
     title: "Salesforce Data Cloud Consultant",
     description: "Completed in July 2025.",
     tags: [
-      "Data Management",
+      "Data Cloud Administration",
       "Data Modeling",
       "Data Analysis",
-      "Data Migration",
       "Data Transformation",
       "Data Activation",
-      "Data Cloud Administration",
       "Data Explorer & APIs"
     ],
     imageUrl: SalesforceDataCloudConsultant_Dany,
