@@ -20,7 +20,7 @@ export default function About() {
       <SectionHeading>About me</SectionHeading>
       <p className="mb-3">
       I am a portuguese tech enthusiast, currently based in{" "}
-      <span className="font-medium">Madrid</span>, with a strong passion <b>Data</b>, <b>CRM</b>, and the <b>Salesforce ecosystem</b>.
+      <b>Madrid</b>, with a strong passion <b>Data</b>, <b>CRM</b>, and the <b>Salesforce ecosystem</b>.
       </p>
       <p className="mb-3">
       My journey into technology started with a background in marketing, where I quickly realized that CRM was the perfect bridge between business and tech. Since then, I’ve been diving deeper into the world of data, marketing automation and problem-solving. I love the challenge of untangling complex issues, learning new tools, and constantly pushing myself to improve, and this website is just one of the many projects where I get to explore new technologies and skills.
