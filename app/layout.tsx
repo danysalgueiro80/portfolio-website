@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="!scroll-smooth">
       <body
-        className={`${archivo.className} bg-white relative pt-28 sm:pt-36 dark:bg-black dark:text-gray-50 dark:text-opacity-90`}
+        className={`${archivo.className} bg-white relative pt-28 sm:pt-36 dark:bg-[#15151F] dark:text-gray-50 dark:text-opacity-90`}
       >
         {/* Removed all light mode background and color divs */}
         <ThemeContextProvider>
