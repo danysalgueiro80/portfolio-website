@@ -4,6 +4,7 @@ import { FaReact } from "react-icons/fa";
 import { LuGraduationCap } from "react-icons/lu";
 import MarketingCloudEmailSpecialist_Dany from "@/public/MarketingCloudEmailSpecialist_Dany.jpg";
 import MarketingCloudDeveloper_Dany from "@/public/MarketingCloudDeveloper_Dany.jpg";
+import SalesforceDataCloudConsultant_Dany from "@/public/SalesforceDataCloudConsultant_Dany.jpg";
 export const links = [
   {
     name: "Home",
@@ -101,6 +102,21 @@ export const projectsData = [
       "Completed in September 2024.",
     tags: ["AMPscript", "SQL", "REST API", "SOAP API","SSJS"],
     imageUrl: MarketingCloudDeveloper_Dany,
+  },
+  {
+    title: "Salesforce Data Cloud Consultant",
+    description: "Completed in July 2025.",
+    tags: [
+      "Data Management",
+      "Data Modeling",
+      "Data Analysis",
+      "Data Migration",
+      "Data Transformation",
+      "Data Activation",
+      "Data Cloud Administration",
+      "Data Explorer & APIs"
+    ],
+    imageUrl: SalesforceDataCloudConsultant_Dany,
   },
 ] as const;
 
