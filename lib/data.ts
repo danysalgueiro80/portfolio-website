@@ -110,7 +110,6 @@ export const projectsData = [
       "Data Cloud Administration",
       "Data Modeling",
       "Data Analysis",
-      "Data Transformation",
       "Data Activation",
       "Data Explorer & APIs"
     ],
