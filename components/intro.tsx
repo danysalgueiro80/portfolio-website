@@ -84,7 +84,7 @@ export default function Intro() {
       >
         <CustomTypewriter
           text={"Hello, I'm Dany. I'm a Salesforce Marketing Cloud consultant with 3 years of experience. I enjoy building campaign targets with SQL, setting up beautiful customer journeys, and developing personalized HTML emails."}
-          speed={50}
+          speed={25}
           className="inline"
           cursorClassName="text-blue-500"
         />
