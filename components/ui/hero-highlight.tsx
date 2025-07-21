@@ -121,7 +121,7 @@ export const Highlight = ({
       transition={{
         duration: 2,
         ease: "linear",
-        delay: 0.5,
+        // No delay, no repeat
       }}
       style={{
         backgroundRepeat: "no-repeat",
