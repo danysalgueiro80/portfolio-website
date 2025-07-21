@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from 'next/image'; 
 import profilePic from '@/public/Dany-profile-pic.png';
 import { motion } from "framer-motion";
@@ -56,20 +56,26 @@ function reconstructElements(flat: FlatPiece[], charIndex: number): (string | JS
 function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClassName = '' }: { elements: (string | JSX.Element)[], speed?: number, className?: string, cursorClassName?: string }) {
   const [charIndex, setCharIndex] = useState(0);
   const [flat, setFlat] = useState<FlatPiece[]>([]);
-  // Always reset animation on mount (page load/refresh)
+  const hasAnimatedRef = useRef(false);
+
   useEffect(() => {
     const { flat } = flattenElements(elements);
     setFlat(flat);
-    setCharIndex(0);
+    // Only reset if animation hasn't run yet
+    if (!hasAnimatedRef.current) {
+      setCharIndex(0);
+    }
   }, [elements]);
 
   useEffect(() => {
     const totalLength = flat.length > 0 ? flat[flat.length - 1].end : 0;
-    if (charIndex < totalLength) {
+    if (charIndex < totalLength && !hasAnimatedRef.current) {
       const timeout = setTimeout(() => {
         setCharIndex(charIndex + 1);
       }, speed);
       return () => clearTimeout(timeout);
+    } else if (charIndex === totalLength && !hasAnimatedRef.current) {
+      hasAnimatedRef.current = true;
     }
   }, [charIndex, flat, speed]);
 
