@@ -11,82 +11,68 @@ import { useInView } from "react-intersection-observer";
 import { useActiveSectionContext } from '../context/active-section-context';
 import { HeroHighlight } from "@/components/ui/hero-highlight";
 
-// Helper to split text and preserve bold tags for the typewriter
-function getTypewriterElements() {
-  return [
-    "Hello, I'm Dany. I'm a ",
-    <HeroHighlight key="sfmc"><b>Salesforce Marketing Cloud</b></HeroHighlight>,
-    " consultant, with ",
-    <b key="years">3 years</b>,
-    " of experience in ",
-    <b key="crm">data-driven CRM projects</b>,
-    ". Also: proud data enthusiast."
-  ];
+// Helper to recursively flatten elements and map their ranges
+type FlatPiece = { text: string; jsx?: JSX.Element; start: number; end: number };
+
+function flattenElements(elements: (string | JSX.Element)[], startIdx = 0): { flat: FlatPiece[]; nextIdx: number } {
+  let flat: FlatPiece[] = [];
+  let idx = startIdx;
+  for (const el of elements) {
+    if (typeof el === 'string') {
+      flat.push({ text: el, start: idx, end: idx + el.length });
+      idx += el.length;
+    } else if (React.isValidElement(el)) {
+      const children = (el as React.ReactElement).props.children;
+      const childArr = Array.isArray(children) ? children : [children];
+      const { flat: childFlat, nextIdx } = flattenElements(childArr, idx);
+      flat.push({ text: childFlat.map(f => f.text).join(''), jsx: el, start: idx, end: nextIdx });
+      idx = nextIdx;
+    }
+  }
+  return { flat, nextIdx: idx };
+}
+
+function reconstructElements(flat: FlatPiece[], charIndex: number): (string | JSX.Element)[] {
+  let result: (string | JSX.Element)[] = [];
+  for (const piece of flat) {
+    if (piece.start >= charIndex) break;
+    const end = Math.min(charIndex, piece.end);
+    const substr = piece.text.slice(0, end - piece.start);
+    if (piece.jsx) {
+      // Recursively reconstruct children if needed
+      const children = piece.jsx.props.children;
+      const childArr = Array.isArray(children) ? children : [children];
+      // Flatten children for this piece
+      const { flat: childFlat } = flattenElements(childArr);
+      const childResult = reconstructElements(childFlat, end - piece.start);
+      result.push(React.cloneElement(piece.jsx, { key: piece.start }, childResult));
+    } else {
+      result.push(substr);
+    }
+  }
+  return result;
 }
 
 function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClassName = '' }: { elements: (string | JSX.Element)[], speed?: number, className?: string, cursorClassName?: string }) {
-  const [displayed, setDisplayed] = useState<(string | JSX.Element)[]>([]);
   const [charIndex, setCharIndex] = useState(0);
-  const [flatText, setFlatText] = useState<string[]>([]);
-  const [elementMap, setElementMap] = useState<{ start: number, end: number, jsx: JSX.Element }[]>([]);
-
-  // Flatten the elements into a string array and map bold ranges
+  const [flat, setFlat] = useState<FlatPiece[]>([]);
   useEffect(() => {
-    let flat: string[] = [];
-    let map: { start: number, end: number, jsx: JSX.Element }[] = [];
-    let idx = 0;
-    elements.forEach((el) => {
-      if (typeof el === 'string') {
-        flat.push(...el.split(''));
-        idx += el.length;
-      } else if (React.isValidElement(el)) {
-        let text = '';
-        const children = (el as React.ReactElement).props.children;
-        if (typeof children === 'string') {
-          text = children;
-        } else if (Array.isArray(children)) {
-          text = children.join('');
-        }
-        map.push({ start: idx, end: idx + text.length, jsx: el });
-        flat.push(...text.split(''));
-        idx += text.length;
-      }
-    });
-    setFlatText(flat);
-    setElementMap(map);
-    setDisplayed([]);
+    const { flat } = flattenElements(elements);
+    setFlat(flat);
     setCharIndex(0);
   }, [elements]);
 
   useEffect(() => {
-    if (charIndex <= flatText.length) {
+    const totalLength = flat.length > 0 ? flat[flat.length - 1].end : 0;
+    if (charIndex <= totalLength) {
       const timeout = setTimeout(() => {
         setCharIndex(charIndex + 1);
       }, speed);
       return () => clearTimeout(timeout);
     }
-  }, [charIndex, flatText, speed]);
+  }, [charIndex, flat, speed]);
 
-  useEffect(() => {
-    // Rebuild the displayed array with bold tags as needed
-    let result: (string | JSX.Element)[] = [];
-    let i = 0;
-    while (i < charIndex) {
-      // Check if this index is inside a bold range
-      const bold = elementMap.find(m => i >= m.start && i < m.end);
-      if (bold) {
-        const start = Math.max(i, bold.start);
-        const end = Math.min(charIndex, bold.end);
-        const text = flatText.slice(start, end).join('');
-        result.push(React.cloneElement(bold.jsx, { key: bold.start }, text));
-        i = end;
-      } else {
-        result.push(flatText[i]);
-        i++;
-      }
-    }
-    setDisplayed(result);
-  }, [charIndex, flatText, elementMap]);
+  const displayed = reconstructElements(flat, charIndex);
 
   return (
     <span className={className}>
