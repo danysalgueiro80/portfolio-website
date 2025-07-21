@@ -11,9 +11,7 @@ export default function ThemeSwitch() {
 
   const handleClick = () => {
     setRotation(rotation + 360);
-    setTimeout(() => {
-      toggleTheme();
-    }, 400);
+    toggleTheme(); // Change theme instantly
   };
 
   return (
