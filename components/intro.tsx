@@ -56,29 +56,22 @@ function reconstructElements(flat: FlatPiece[], charIndex: number): (string | JS
 function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClassName = '' }: { elements: (string | JSX.Element)[], speed?: number, className?: string, cursorClassName?: string }) {
   const [charIndex, setCharIndex] = useState(0);
   const [flat, setFlat] = useState<FlatPiece[]>([]);
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  // Only flatten elements and reset on first mount
+  // Always reset animation on mount (page load/refresh)
   useEffect(() => {
-    if (!hasAnimated) {
-      const { flat } = flattenElements(elements);
-      setFlat(flat);
-      setCharIndex(0);
-    }
-  }, [elements, hasAnimated]);
+    const { flat } = flattenElements(elements);
+    setFlat(flat);
+    setCharIndex(0);
+  }, [elements]);
 
   useEffect(() => {
-    if (hasAnimated) return;
     const totalLength = flat.length > 0 ? flat[flat.length - 1].end : 0;
     if (charIndex < totalLength) {
       const timeout = setTimeout(() => {
         setCharIndex(charIndex + 1);
       }, speed);
       return () => clearTimeout(timeout);
-    } else if (charIndex === totalLength && !hasAnimated) {
-      setHasAnimated(true);
     }
-  }, [charIndex, flat, speed, hasAnimated]);
+  }, [charIndex, flat, speed]);
 
   const displayed = reconstructElements(flat, charIndex);
 
