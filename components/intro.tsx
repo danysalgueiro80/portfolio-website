@@ -9,7 +9,7 @@ import { BsArrowRight,BsLinkedin } from "react-icons/bs";
 import { HiDownload } from "react-icons/hi";
 import { useInView } from "react-intersection-observer";
 import { useActiveSectionContext } from '../context/active-section-context';
-import ReactTypingEffect from 'react-typing-effect';
+import { TypingText } from 'animate-ui';
 
 export default function Intro() {
 
@@ -63,13 +63,10 @@ export default function Intro() {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <ReactTypingEffect
-          text={["Hello, I'm Dany. I'm a Salesforce Marketing Cloud consultant with 3 years of experience. I enjoy building campaign targets with SQL, setting up beautiful customer journeys, and developing personalized HTML emails."]}
-          speed={50}
-          eraseDelay={9999999}
-          typingDelay={200}
-          cursorClassName="text-blue-500"
+        <TypingText
+          text="Hello, I'm Dany. I'm a Salesforce Marketing Cloud consultant with 3 years of experience. I enjoy building campaign targets with SQL, setting up beautiful customer journeys, and developing personalized HTML emails."
           className="inline"
+          cursor
         />
       </motion.h1>
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-2 px-4 text-lg font-medium"
