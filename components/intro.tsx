@@ -82,6 +82,19 @@ function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClas
   );
 }
 
+// Helper to split text and preserve bold tags for the typewriter
+function getTypewriterElements() {
+  return [
+    "Hello, I'm Dany. I'm a ",
+    <HeroHighlight key="sfmc"><b>Salesforce Marketing Cloud</b></HeroHighlight>,
+    " consultant, with ",
+    <b key="years">3 years</b>,
+    " of experience in ",
+    <b key="crm">data-driven CRM projects</b>,
+    ". Also: proud data enthusiast."
+  ];
+}
+
 export default function Intro() {
 
     const { ref, inView } = useInView({
