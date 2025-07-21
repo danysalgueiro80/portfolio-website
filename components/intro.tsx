@@ -63,14 +63,16 @@ export default function Intro() {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <ReactTypingEffect
-          text={["Hello, I'm Dany. I'm a Salesforce Marketing Cloud consultant with 3 years of experience. I enjoy building campaign targets with SQL, setting up beautiful customer journeys, and developing personalized HTML emails."]}
-          speed={50}
-          eraseDelay={9999999}
-          typingDelay={200}
-          cursorClassName="text-blue-500"
-          className="inline"
-        />
+        <span className="inline whitespace-nowrap">
+          <ReactTypingEffect
+            text={["Hello, I'm Dany. I'm a Salesforce Marketing Cloud consultant with 3 years of experience. I enjoy building campaign targets with SQL, setting up beautiful customer journeys, and developing personalized HTML emails."]}
+            speed={50}
+            eraseDelay={9999999}
+            typingDelay={200}
+            cursorClassName="text-blue-500"
+            className="inline"
+          />
+        </span>
       </motion.h1>
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-2 px-4 text-lg font-medium"
                         initial={{ opacity: 0, scale: 0 }}
