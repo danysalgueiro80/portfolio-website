@@ -90,7 +90,7 @@ function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClas
   return (
     <span className={className}>
       {displayed}
-      <span className={cursorClassName + ' animate-pulse'}>|</span>
+      <span className={(cursorClassName ? cursorClassName + ' ' : '') + 'typewriter-cursor animate-pulse'}>|</span>
     </span>
   );
 }
@@ -151,8 +151,9 @@ export default function Intro() {
           elements={getTypewriterElements()}
           speed={35}
           className="inline"
-          cursorClassName="text-blue-500"
+          cursorClassName="" 
         />
+        <style>{`.typewriter-cursor { color: #2D9EDB !important; }`}</style>
       </motion.h1>
             <motion.div className="flex flex-col sm:flex-row items-center justify-center gap-2 px-4 text-lg font-medium"
                         initial={{ opacity: 0, scale: 0 }}
