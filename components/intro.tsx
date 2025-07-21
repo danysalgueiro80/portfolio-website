@@ -56,13 +56,6 @@ function reconstructElements(flat: FlatPiece[], charIndex: number): (string | JS
 // Module-level variable to track animation per page load
 let hasTypewriterAnimated = false;
 const TYPEWRITER_SESSION_KEY = 'typewriter-animated';
-// Clear the session key only once per page load, after hydration
-import { useEffect } from 'react';
-useEffect(() => {
-  if (typeof window !== 'undefined') {
-    window.sessionStorage.removeItem(TYPEWRITER_SESSION_KEY);
-  }
-}, []);
 
 function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClassName = '' }: { elements: (string | JSX.Element)[], speed?: number, className?: string, cursorClassName?: string }) {
   const [charIndex, setCharIndex] = useState(0);
@@ -130,6 +123,12 @@ function getTypewriterElements() {
 }
 
 export default function Intro() {
+  // Clear the session key only once per page load, after hydration
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.sessionStorage.removeItem(TYPEWRITER_SESSION_KEY);
+    }
+  }, []);
 
     const { ref, inView } = useInView({
         threshold: 0.4,
