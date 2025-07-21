@@ -55,31 +55,41 @@ function reconstructElements(flat: FlatPiece[], charIndex: number): (string | JS
 
 // Module-level variable to track animation per page load
 let hasTypewriterAnimated = false;
+const TYPEWRITER_SESSION_KEY = 'typewriter-animated';
 
 function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClassName = '' }: { elements: (string | JSX.Element)[], speed?: number, className?: string, cursorClassName?: string }) {
   const [charIndex, setCharIndex] = useState(0);
   const [flat, setFlat] = useState<FlatPiece[]>([]);
+  const [shouldAnimate, setShouldAnimate] = useState(true);
 
   useEffect(() => {
     const { flat } = flattenElements(elements);
     setFlat(flat);
-    // Only reset if animation hasn't run yet
-    if (!hasTypewriterAnimated) {
+    // Check sessionStorage on mount
+    if (typeof window !== 'undefined' && window.sessionStorage.getItem(TYPEWRITER_SESSION_KEY)) {
+      setShouldAnimate(false);
+      setCharIndex(flat.length > 0 ? flat[flat.length - 1].end : 0);
+    } else {
+      setShouldAnimate(true);
       setCharIndex(0);
     }
   }, [elements]);
 
   useEffect(() => {
+    if (!shouldAnimate) return;
     const totalLength = flat.length > 0 ? flat[flat.length - 1].end : 0;
-    if (charIndex < totalLength && !hasTypewriterAnimated) {
+    if (charIndex < totalLength) {
       const timeout = setTimeout(() => {
         setCharIndex(charIndex + 1);
       }, speed);
       return () => clearTimeout(timeout);
-    } else if (charIndex === totalLength && !hasTypewriterAnimated) {
-      hasTypewriterAnimated = true;
+    } else if (charIndex === totalLength && shouldAnimate) {
+      if (typeof window !== 'undefined') {
+        window.sessionStorage.setItem(TYPEWRITER_SESSION_KEY, 'true');
+      }
+      setShouldAnimate(false);
     }
-  }, [charIndex, flat, speed]);
+  }, [charIndex, flat, speed, shouldAnimate]);
 
   const displayed = reconstructElements(flat, charIndex);
 
