@@ -83,7 +83,7 @@ export default function Intro() {
         animate={{ opacity: 1, y: 0 }}
       >
         <CustomTypewriter
-          text={"Hello, I'm Dany. I'm a Salesforce Marketing Cloud consultant with 3 years of experience. I enjoy building campaign targets with SQL, setting up beautiful customer journeys, and developing personalized HTML emails."}
+          text={"Hello, I'm Dany. Salesforce Marketing Cloud consultant, experienced in data-driven campaigns and strategy. Also: proud data enthusiast."}
           speed={35}
           className="inline"
           cursorClassName="text-blue-500"
