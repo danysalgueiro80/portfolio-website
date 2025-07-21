@@ -63,7 +63,7 @@ export default function Intro() {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <span className="inline whitespace-nowrap">
+        <span className="inline">
           <ReactTypingEffect
             text={["Hello, I'm Dany. I'm a Salesforce Marketing Cloud consultant with 3 years of experience. I enjoy building campaign targets with SQL, setting up beautiful customer journeys, and developing personalized HTML emails."]}
             speed={50}
