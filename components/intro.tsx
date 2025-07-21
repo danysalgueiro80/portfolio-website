@@ -53,29 +53,31 @@ function reconstructElements(flat: FlatPiece[], charIndex: number): (string | JS
   return result;
 }
 
+// Module-level variable to track animation per page load
+let hasTypewriterAnimated = false;
+
 function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClassName = '' }: { elements: (string | JSX.Element)[], speed?: number, className?: string, cursorClassName?: string }) {
   const [charIndex, setCharIndex] = useState(0);
   const [flat, setFlat] = useState<FlatPiece[]>([]);
-  const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
     const { flat } = flattenElements(elements);
     setFlat(flat);
     // Only reset if animation hasn't run yet
-    if (!hasAnimatedRef.current) {
+    if (!hasTypewriterAnimated) {
       setCharIndex(0);
     }
   }, [elements]);
 
   useEffect(() => {
     const totalLength = flat.length > 0 ? flat[flat.length - 1].end : 0;
-    if (charIndex < totalLength && !hasAnimatedRef.current) {
+    if (charIndex < totalLength && !hasTypewriterAnimated) {
       const timeout = setTimeout(() => {
         setCharIndex(charIndex + 1);
       }, speed);
       return () => clearTimeout(timeout);
-    } else if (charIndex === totalLength && !hasAnimatedRef.current) {
-      hasAnimatedRef.current = true;
+    } else if (charIndex === totalLength && !hasTypewriterAnimated) {
+      hasTypewriterAnimated = true;
     }
   }, [charIndex, flat, speed]);
 
