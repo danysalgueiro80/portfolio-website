@@ -39,7 +39,13 @@ function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClas
         flat.push(...el.split(''));
         idx += el.length;
       } else if (React.isValidElement(el)) {
-        const text = (el.props.children as string) || '';
+        let text = '';
+        const children = (el as React.ReactElement).props.children;
+        if (typeof children === 'string') {
+          text = children;
+        } else if (Array.isArray(children)) {
+          text = children.join('');
+        }
         map.push({ start: idx, end: idx + text.length, jsx: el });
         flat.push(...text.split(''));
         idx += text.length;
