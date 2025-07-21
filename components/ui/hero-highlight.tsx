@@ -41,7 +41,7 @@ export const HeroHighlight = ({
   return (
     <div
       className={cn(
-        "group relative inline-flex items-center justify-center bg-white dark:bg-black px-1 py-0.5 rounded-md cursor-pointer",
+        "group relative flex h-full w-full items-center justify-center bg-white dark:bg-black",
         containerClassName,
       )}
       onMouseMove={handleMouseMove}
@@ -64,14 +64,14 @@ export const HeroHighlight = ({
           backgroundImage: dotPatterns.light.hover,
           WebkitMaskImage: useMotionTemplate`
             radial-gradient(
-              120px circle at ${mouseX}px ${mouseY}px,
+              200px circle at ${mouseX}px ${mouseY}px,
               black 0%,
               transparent 100%
             )
           `,
           maskImage: useMotionTemplate`
             radial-gradient(
-              120px circle at ${mouseX}px ${mouseY}px,
+              200px circle at ${mouseX}px ${mouseY}px,
               black 0%,
               transparent 100%
             )
@@ -84,21 +84,56 @@ export const HeroHighlight = ({
           backgroundImage: dotPatterns.dark.hover,
           WebkitMaskImage: useMotionTemplate`
             radial-gradient(
-              120px circle at ${mouseX}px ${mouseY}px,
+              200px circle at ${mouseX}px ${mouseY}px,
               black 0%,
               transparent 100%
             )
           `,
           maskImage: useMotionTemplate`
             radial-gradient(
-              120px circle at ${mouseX}px ${mouseY}px,
+              200px circle at ${mouseX}px ${mouseY}px,
               black 0%,
               transparent 100%
             )
           `,
         }}
       />
-      <span className={cn("relative z-20 font-bold text-inherit", className)}>{children}</span>
+      <div className={cn("relative z-20", className)}>{children}</div>
     </div>
+  );
+};
+
+export const Highlight = ({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
+  return (
+    <motion.span
+      initial={{
+        backgroundSize: "0% 100%",
+      }}
+      animate={{
+        backgroundSize: "100% 100%",
+      }}
+      transition={{
+        duration: 2,
+        ease: "linear",
+        delay: 0.5,
+      }}
+      style={{
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "left center",
+        display: "inline",
+      }}
+      className={cn(
+        `relative inline-block rounded-lg bg-gradient-to-r from-indigo-300 to-purple-300 px-1 pb-1 dark:from-indigo-500 dark:to-purple-500`,
+        className,
+      )}
+    >
+      {children}
+    </motion.span>
   );
 }; 

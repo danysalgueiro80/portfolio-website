@@ -9,7 +9,7 @@ import { BsArrowRight,BsLinkedin } from "react-icons/bs";
 import { HiDownload } from "react-icons/hi";
 import { useInView } from "react-intersection-observer";
 import { useActiveSectionContext } from '../context/active-section-context';
-import { HeroHighlight } from "@/components/ui/hero-highlight";
+import { HeroHighlight, Highlight } from "@/components/ui/hero-highlight";
 
 // Helper to recursively flatten elements and map their ranges
 type FlatPiece = { text: string; jsx?: JSX.Element; start: number; end: number };
@@ -86,7 +86,7 @@ function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClas
 function getTypewriterElements() {
   return [
     "Hello, I'm Dany. I'm a ",
-    <HeroHighlight key="sfmc"><b>Salesforce Marketing Cloud</b></HeroHighlight>,
+    <Highlight key="sfmc"><b>Salesforce Marketing Cloud</b></Highlight>,
     " consultant, with ",
     <b key="years">3 years</b>,
     " of experience in ",
