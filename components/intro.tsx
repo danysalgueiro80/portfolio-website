@@ -62,19 +62,27 @@ function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClas
   const [flat, setFlat] = useState<FlatPiece[]>([]);
   const [shouldAnimate, setShouldAnimate] = useState(true);
 
+  // Step 1: Flatten elements on mount or when elements change
   useEffect(() => {
     const { flat } = flattenElements(elements);
     setFlat(flat);
-    // Check sessionStorage on mount
+  }, [elements]);
+
+  // Step 2: After flattening, check sessionStorage and set animation state
+  useEffect(() => {
+    if (flat.length === 0) return;
     if (typeof window !== 'undefined' && window.sessionStorage.getItem(TYPEWRITER_SESSION_KEY)) {
       setShouldAnimate(false);
-      setCharIndex(flat.length > 0 ? flat[flat.length - 1].end : 0);
+      setCharIndex(flat[flat.length - 1].end);
     } else {
       setShouldAnimate(true);
       setCharIndex(0);
     }
-  }, [elements]);
+    // Only run this effect when flat changes (not on every render)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [flat]);
 
+  // Step 3: Animate if shouldAnimate is true
   useEffect(() => {
     if (!shouldAnimate) return;
     const totalLength = flat.length > 0 ? flat[flat.length - 1].end : 0;
