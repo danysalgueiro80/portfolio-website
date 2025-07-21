@@ -10,18 +10,77 @@ import { HiDownload } from "react-icons/hi";
 import { useInView } from "react-intersection-observer";
 import { useActiveSectionContext } from '../context/active-section-context';
 
-function CustomTypewriter({ text, speed = 50, className = '', cursorClassName = '' }: { text: string, speed?: number, className?: string, cursorClassName?: string }) {
-  const [displayed, setDisplayed] = useState('');
-  const [index, setIndex] = useState(0);
+// Helper to split text and preserve bold tags for the typewriter
+function getTypewriterElements() {
+  return [
+    "Hello, I'm Dany. I'm a ",
+    <b key="sfmc">Salesforce Marketing Cloud</b>,
+    " consultant, with ",
+    <b key="years">3 years</b>,
+    " of experience in ",
+    <b key="crm">data-driven CRM projects</b>,
+    ". Also: proud data enthusiast."
+  ];
+}
+
+function CustomTypewriterRich({ elements, speed = 35, className = '', cursorClassName = '' }: { elements: (string | JSX.Element)[], speed?: number, className?: string, cursorClassName?: string }) {
+  const [displayed, setDisplayed] = useState<(string | JSX.Element)[]>([]);
+  const [charIndex, setCharIndex] = useState(0);
+  const [flatText, setFlatText] = useState<string[]>([]);
+  const [elementMap, setElementMap] = useState<{ start: number, end: number, jsx: JSX.Element }[]>([]);
+
+  // Flatten the elements into a string array and map bold ranges
   useEffect(() => {
-    if (index < text.length) {
+    let flat: string[] = [];
+    let map: { start: number, end: number, jsx: JSX.Element }[] = [];
+    let idx = 0;
+    elements.forEach((el) => {
+      if (typeof el === 'string') {
+        flat.push(...el.split(''));
+        idx += el.length;
+      } else if (React.isValidElement(el)) {
+        const text = (el.props.children as string) || '';
+        map.push({ start: idx, end: idx + text.length, jsx: el });
+        flat.push(...text.split(''));
+        idx += text.length;
+      }
+    });
+    setFlatText(flat);
+    setElementMap(map);
+    setDisplayed([]);
+    setCharIndex(0);
+  }, [elements]);
+
+  useEffect(() => {
+    if (charIndex <= flatText.length) {
       const timeout = setTimeout(() => {
-        setDisplayed(text.slice(0, index + 1));
-        setIndex(index + 1);
+        setCharIndex(charIndex + 1);
       }, speed);
       return () => clearTimeout(timeout);
     }
-  }, [index, text, speed]);
+  }, [charIndex, flatText, speed]);
+
+  useEffect(() => {
+    // Rebuild the displayed array with bold tags as needed
+    let result: (string | JSX.Element)[] = [];
+    let i = 0;
+    while (i < charIndex) {
+      // Check if this index is inside a bold range
+      const bold = elementMap.find(m => i >= m.start && i < m.end);
+      if (bold) {
+        const start = Math.max(i, bold.start);
+        const end = Math.min(charIndex, bold.end);
+        const text = flatText.slice(start, end).join('');
+        result.push(React.cloneElement(bold.jsx, { key: bold.start }, text));
+        i = end;
+      } else {
+        result.push(flatText[i]);
+        i++;
+      }
+    }
+    setDisplayed(result);
+  }, [charIndex, flatText, elementMap]);
+
   return (
     <span className={className}>
       {displayed}
@@ -82,8 +141,8 @@ export default function Intro() {
         initial={{ opacity: 0, y: 100 }}
         animate={{ opacity: 1, y: 0 }}
       >
-        <CustomTypewriter
-          text={"Hello, I'm Dany. Salesforce Marketing Cloud consultant, experienced in data-driven campaigns and strategy. Also: proud data enthusiast."}
+        <CustomTypewriterRich
+          elements={getTypewriterElements()}
           speed={35}
           className="inline"
           cursorClassName="text-blue-500"
