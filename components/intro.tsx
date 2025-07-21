@@ -9,12 +9,13 @@ import { BsArrowRight,BsLinkedin } from "react-icons/bs";
 import { HiDownload } from "react-icons/hi";
 import { useInView } from "react-intersection-observer";
 import { useActiveSectionContext } from '../context/active-section-context';
+import { HeroHighlight } from "@/components/ui/hero-highlight";
 
 // Helper to split text and preserve bold tags for the typewriter
 function getTypewriterElements() {
   return [
     "Hello, I'm Dany. I'm a ",
-    <b key="sfmc">Salesforce Marketing Cloud</b>,
+    <HeroHighlight key="sfmc"><b>Salesforce Marketing Cloud</b></HeroHighlight>,
     " consultant, with ",
     <b key="years">3 years</b>,
     " of experience in ",
