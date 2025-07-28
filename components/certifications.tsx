@@ -39,20 +39,14 @@ export default function Certifications() {
     };
   }, [selectedCertification]);
 
-  // Scroll handler to close modal
+  // Prevent page scrolling when modal is open
   useEffect(() => {
-    const handleScroll = () => {
-      if (selectedCertification && window.innerWidth < 768) { // Only on mobile (less than 768px)
-        setSelectedCertification(null);
-      }
-    };
-
     if (selectedCertification) {
-      window.addEventListener("scroll", handleScroll);
+      document.body.style.overflow = 'hidden';
     }
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      document.body.style.overflow = 'unset';
     };
   }, [selectedCertification]);
 
