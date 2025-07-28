@@ -13,3 +13,36 @@ html.dark {
 .borderBlack {
   @apply border border-black/10;
 }
+
+/* Aurora background animations */
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%, 350% 50%;
+  }
+}
+
+.animate-aurora {
+  animation: aurora 60s linear infinite;
+}
+
+/* Aurora background gradients */
+.aurora-bg-light {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.3) 0%, transparent 50%);
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-position: 50% 50%, 50% 50%, 50% 50%;
+}
+
+.aurora-bg-dark {
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.1) 0%, transparent 50%);
+  background-size: 100% 100%, 100% 100%, 100% 100%;
+  background-position: 50% 50%, 50% 50%, 50% 50%;
+}

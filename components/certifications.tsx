@@ -88,7 +88,7 @@ export default function Certifications() {
         initial="hidden"
         animate="visible"
       >
-        <div className="relative flex border border-white/40 rounded-full p-1 dark:border-black/40">
+        <div className="relative flex">
           {categories.map((category) => (
             <motion.button
               key={category}

@@ -3,7 +3,7 @@ import "./globals.css";
 import { Archivo } from 'next/font/google';
 import ActiveSectionContextProvider from "@/context/active-section-context";
 import Footer from "@/components/footer";
-import ThemeSwitch from "@/components/theme-switch";
+import ThemeSwitchNew from "@/components/ui/theme-switch-new";
 import ThemeContextProvider from "@/context/theme-context";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
@@ -28,7 +28,6 @@ export default function RootLayout({
       <body
         className={`${archivo.className} bg-white relative pt-28 sm:pt-36 dark:bg-[#0F172A] dark:text-gray-50 dark:text-opacity-90`}
       >
-        {/* Removed all light mode background and color divs */}
         <ThemeContextProvider>
           <ActiveSectionContextProvider>
             <Header />
@@ -36,7 +35,7 @@ export default function RootLayout({
             <Footer />
 
             <Toaster position="top-right" />
-            <ThemeSwitch />
+            <ThemeSwitchNew />
           </ActiveSectionContextProvider>
         </ThemeContextProvider>
         <Analytics />
