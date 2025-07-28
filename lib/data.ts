@@ -5,6 +5,7 @@ import { LuGraduationCap } from "react-icons/lu";
 import MarketingCloudEmailSpecialist_Dany from "@/public/MarketingCloudEmailSpecialist_Dany.jpg";
 import MarketingCloudDeveloper_Dany from "@/public/MarketingCloudDeveloper_Dany.jpg";
 import SalesforceDataCloudConsultant_Dany from "@/public/SalesforceDataCloudConsultant_Dany.png";
+
 export const links = [
   {
     name: "Home",
@@ -64,7 +65,7 @@ export const experiencesData = [
     date: "2022",
   },
   {
-    title: "Master’s degree in Marketing and Innovation",
+    title: "Master's degree in Marketing and Innovation",
     location: "IADE - School of Design, Technology, and Communication, Lisbon",
     description:"",    
     icon: React.createElement(LuGraduationCap),
@@ -114,6 +115,36 @@ export const projectsData = [
       "Data Explorer & APIs"
     ],
     imageUrl: SalesforceDataCloudConsultant_Dany,
+  },
+] as const;
+
+export const certificationsData = [
+  {
+    title: "Salesforce Marketing Cloud Email Specialist",
+    description: "Completed in September 2023.",
+    tags: ["Email Studio", "A/B Testing", "Automation Studio", "Journey Builder"],
+    imageUrl: MarketingCloudEmailSpecialist_Dany,
+    category: "Salesforce",
+  },
+  {
+    title: "Salesforce Marketing Cloud Developer",
+    description: "Completed in September 2024.",
+    tags: ["AMPscript", "SQL", "REST API", "SOAP API", "SSJS"],
+    imageUrl: MarketingCloudDeveloper_Dany,
+    category: "Salesforce",
+  },
+  {
+    title: "Salesforce Data Cloud Consultant",
+    description: "Completed in July 2025.",
+    tags: [
+      "Data Cloud Administration",
+      "Data Modeling",
+      "Data Analysis",
+      "Data Activation",
+      "Data Explorer & APIs"
+    ],
+    imageUrl: SalesforceDataCloudConsultant_Dany,
+    category: "Salesforce",
   },
 ] as const;
 
