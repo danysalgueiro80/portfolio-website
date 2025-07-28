@@ -1,5 +1,6 @@
 "use client";
 
+// Certifications component with simplified modal behavior
 import React, { useState, useEffect } from "react";
 import SectionHeading from "./section-heading";
 import { certificationsData } from "@/lib/data";
