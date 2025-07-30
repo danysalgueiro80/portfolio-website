@@ -5,6 +5,7 @@ import { LuGraduationCap } from "react-icons/lu";
 import MarketingCloudEmailSpecialist_Dany from "@/public/MarketingCloudEmailSpecialist_Dany.jpg";
 import MarketingCloudDeveloper_Dany from "@/public/MarketingCloudDeveloper_Dany.jpg";
 import SalesforceDataCloudConsultant_Dany from "@/public/SalesforceDataCloudConsultant_Dany.png";
+import DataCampBigQuery_Dany from "@/public/DataCampBigQuery_Dany.png";
 
 export const links = [
   {
@@ -16,7 +17,7 @@ export const links = [
     hash: "#about",
   },
   {
-    name: "Certifications",
+    name: "Accomplishments",
     hash: "#certifications",
   },
   {
@@ -145,6 +146,13 @@ export const certificationsData = [
     ],
     imageUrl: SalesforceDataCloudConsultant_Dany,
     category: "Salesforce",
+  },
+  {
+    title: "DataCamp Introduction to BigQuery",
+    description: "Completed in July 2025.",
+    tags: ["BigQuery Architecture", "Cloud SQL", "Data Types", "CTEs", "Query Optimization", "DML statements"],
+    imageUrl: DataCampBigQuery_Dany,
+    category: "Data",
   },
 ] as const;
 

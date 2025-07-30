@@ -74,7 +74,7 @@ export default function Certifications() {
 
   return (
     <section ref={ref} id="certifications" className="scroll-mt-28 mb-28">
-      <SectionHeading>My certifications</SectionHeading>
+      <SectionHeading>My Accomplishments</SectionHeading>
       
       {/* Filter Tabs - Matching header design */}
       <motion.div 
