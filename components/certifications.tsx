@@ -12,7 +12,7 @@ import { IoClose } from "react-icons/io5";
 type Category = "All" | "Salesforce" | "Data";
 
 export default function Certifications() {
-  const { ref } = useSectionInView("Certifications", 0.5);
+  const { ref } = useSectionInView("Accomplishments", 0.5);
   const [selectedCategory, setSelectedCategory] = useState<Category>("All");
   const [selectedCertification, setSelectedCertification] = useState<(typeof certificationsData)[number] | null>(null);
 
