@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SectionHeading from "./section-heading";
 import { motion } from "framer-motion";
 import { useSectionInView } from "@/lib/hooks";
@@ -10,6 +10,12 @@ import toast from "react-hot-toast";
 
 export default function Contact() {
   const { ref } = useSectionInView("Contact");
+  const [formStartTs, setFormStartTs] = useState<string>("");
+
+  useEffect(() => {
+    // Capture when the user first saw the form (used to block instant bot submits)
+    setFormStartTs(String(Date.now()));
+  }, []);
 
   return (
     <motion.section
@@ -38,6 +44,10 @@ export default function Contact() {
       <form
         className="mt-10 flex flex-col dark:text-black"
         action={async (formData) => {
+          // Ensure the timestamp is submitted (SSR fallback)
+          if (!formData.get("formStart")) {
+            formData.set("formStart", formStartTs);
+          }
           const { data, error } = await sendEmail(formData);
 
           if (error) {
@@ -48,6 +58,17 @@ export default function Contact() {
           toast.success("Email sent successfully!");
         }}
       >
+        {/* Honeypot field (hidden from real users) */}
+        <input
+          type="text"
+          name="company"
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+          aria-hidden="true"
+        />
+        {/* Submission timing trap */}
+        <input type="hidden" name="formStart" value={formStartTs} />
         <input
           className="h-14 px-4 rounded-lg borderBlack dark:bg-white dark:bg-opacity-80 dark:focus:bg-opacity-100 transition-all dark:outline-none"
           name="senderEmail"

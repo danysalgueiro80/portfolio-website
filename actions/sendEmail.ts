@@ -10,6 +10,30 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendEmail = async (formData: FormData) => {
   const senderEmail = formData.get("senderEmail");
   const message = formData.get("message");
+  const honeypot = formData.get("company");
+  const formStart = formData.get("formStart");
+
+  // 1) Honeypot check
+  if (typeof honeypot === "string" && honeypot.trim().length > 0) {
+    return { error: "Spam detected" };
+  }
+
+  // 2) Submission timing check (require at least 3 seconds on page)
+  const now = Date.now();
+  const startTs = typeof formStart === "string" ? parseInt(formStart, 10) : 0;
+  if (!Number.isNaN(startTs) && startTs > 0 && now - startTs < 3000) {
+    return { error: "Please take a moment before submitting." };
+  }
+
+  // 3) Basic content heuristics
+  const combined = `${String(senderEmail ?? "")}\n${String(message ?? "")}`.toLowerCase();
+  const badPhrases = [
+    "viagra", "crypto", "binary options", "seo service",
+    "guest post", "backlinks", "adult", "porn", "casino",
+  ];
+  if (badPhrases.some((p) => combined.includes(p))) {
+    return { error: "Message flagged as spam." };
+  }
 
   // simple server-side validation
   if (!validateString(senderEmail, 500)) {
