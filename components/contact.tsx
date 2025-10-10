@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import SectionHeading from "./section-heading";
 import { motion } from "framer-motion";
 import { useSectionInView } from "@/lib/hooks";
@@ -11,10 +11,25 @@ import toast from "react-hot-toast";
 export default function Contact() {
   const { ref } = useSectionInView("Contact");
   const [formStartTs, setFormStartTs] = useState<string>("");
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
     // Capture when the user first saw the form (used to block instant bot submits)
     setFormStartTs(String(Date.now()));
+  }, []);
+
+  // Load reCAPTCHA v3 script
+  useEffect(() => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    if (!siteKey) return; // allow local dev without key
+    const id = "recaptcha-v3-script";
+    if (document.getElementById(id)) return;
+    const script = document.createElement("script");
+    script.id = id;
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
   }, []);
 
   return (
@@ -42,7 +57,36 @@ export default function Contact() {
       </p>
 
       <form
+        ref={formRef}
         className="mt-10 flex flex-col dark:text-black"
+        onSubmit={async (e) => {
+          const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+          if (siteKey && (window as any).grecaptcha) {
+            e.preventDefault();
+            try {
+              const token: string = await (window as any).grecaptcha.execute(siteKey, { action: "contact_submit" });
+              // inject token
+              const input = document.createElement("input");
+              input.type = "hidden";
+              input.name = "recaptchaToken";
+              input.value = token;
+              e.currentTarget.appendChild(input);
+              // also ensure formStart present
+              if (!e.currentTarget.querySelector('input[name="formStart"]')) {
+                const ts = document.createElement("input");
+                ts.type = "hidden";
+                ts.name = "formStart";
+                ts.value = formStartTs;
+                e.currentTarget.appendChild(ts);
+              }
+              e.currentTarget.submit();
+            } catch (err) {
+              // fall back to normal submit without token
+              e.currentTarget.submit();
+            }
+          }
+          // else let native submit continue and server will handle missing token
+        }}
         action={async (formData) => {
           // Ensure the timestamp is submitted (SSR fallback)
           if (!formData.get("formStart")) {

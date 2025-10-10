@@ -4,6 +4,7 @@ import React from "react";
 import { Resend } from "resend";
 import { validateString, getErrorMessage } from "@/lib/utils";
 import ContactFormEmail from "@/email/contact-form-email";
+import fetch from "node-fetch";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -12,6 +13,7 @@ export const sendEmail = async (formData: FormData) => {
   const message = formData.get("message");
   const honeypot = formData.get("company");
   const formStart = formData.get("formStart");
+  const recaptchaToken = formData.get("recaptchaToken");
 
   // 1) Honeypot check
   if (typeof honeypot === "string" && honeypot.trim().length > 0) {
@@ -23,6 +25,30 @@ export const sendEmail = async (formData: FormData) => {
   const startTs = typeof formStart === "string" ? parseInt(formStart, 10) : 0;
   if (!Number.isNaN(startTs) && startTs > 0 && now - startTs < 3000) {
     return { error: "Please take a moment before submitting." };
+  }
+
+  // 2.5) Verify reCAPTCHA v3 if token provided
+  if (typeof recaptchaToken === "string" && recaptchaToken.length > 0) {
+    const secret = process.env.RECAPTCHA_SECRET_KEY;
+    if (!secret) {
+      return { error: "Server misconfiguration: missing reCAPTCHA secret." };
+    }
+    try {
+      const resp = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          secret,
+          response: recaptchaToken,
+        }).toString(),
+      });
+      const result = (await resp.json()) as { success: boolean; score?: number; action?: string };
+      if (!result.success || (typeof result.score === "number" && result.score < 0.5)) {
+        return { error: "reCAPTCHA verification failed." };
+      }
+    } catch {
+      return { error: "Unable to verify reCAPTCHA." };
+    }
   }
 
   // 3) Basic content heuristics
