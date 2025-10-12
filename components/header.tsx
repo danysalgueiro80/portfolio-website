@@ -53,6 +53,11 @@ export default function Header() {
                       stiffness: 380,
                       damping: 30,
                     }}
+                    style={{
+                      margin: '0.75rem',
+                      width: 'calc(100% - 1.5rem)',
+                      height: 'calc(100% - 1.5rem)',
+                    }}
                   ></motion.span>
                 )}
               </Link>
