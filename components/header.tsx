@@ -50,8 +50,8 @@ export default function Header() {
                     layoutId="activeSection"
                     transition={{
                       type: "spring",
-                      stiffness: 380,
-                      damping: 30,
+                      stiffness: 500,
+                      damping: 25,
                     }}
                     style={{
                       margin: '0.75rem',
