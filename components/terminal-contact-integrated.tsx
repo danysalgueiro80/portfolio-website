@@ -97,14 +97,14 @@ export default function TerminalContactIntegrated() {
     }
   }
 
-  const handleRestart = () => {
+  const handleRestart = useCallback(() => {
     setEmail("")
     setMessage("")
     setSubmittedEmail("")
     setSubmittedMessage("")
     setEmailError("")
     setStep("email")
-  }
+  }, [])
 
   const handleSubmit = useCallback(async () => {
     if (isSubmitting) return;
@@ -148,7 +148,7 @@ export default function TerminalContactIntegrated() {
     } finally {
       setIsSubmitting(false);
     }
-  }, [isSubmitting, submittedEmail, submittedMessage, formStartTs])
+  }, [isSubmitting, submittedEmail, submittedMessage, formStartTs, handleRestart])
 
   return (
     <section ref={ref} id="contact" className="mb-20 sm:mb-28 text-center">
