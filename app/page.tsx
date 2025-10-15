@@ -1,5 +1,5 @@
 import About from "@/components/about";
-import Contact from "@/components/contact";
+import TerminalContactIntegrated from "@/components/terminal-contact-integrated";
 import Experience from "@/components/experience";
 import Intro from "@/components/intro";
 import Certifications from "@/components/certifications";
@@ -15,7 +15,7 @@ export default function Home() {
       <Certifications />
       <Skills />
       <Experience />
-      <Contact />
+      <TerminalContactIntegrated />
     </main>
   );
 }

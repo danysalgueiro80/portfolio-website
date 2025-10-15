@@ -10,6 +10,27 @@ html.dark {
   --line-color: rgba(255, 255, 255, 0.2);
 }
 
+/* Terminal cursor animation */
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.terminal-cursor-block {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.2em;
+  background-color: rgb(147, 197, 253);
+  animation: blink 1s step-end infinite;
+  vertical-align: middle;
+}
+
 .borderBlack {
   @apply border border-black/10;
 }
