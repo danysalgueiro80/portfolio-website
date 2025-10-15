@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import SectionHeading from "./section-heading"
 import { useSectionInView } from "@/lib/hooks"
@@ -43,7 +43,7 @@ export default function TerminalContactIntegrated() {
 
     window.addEventListener("keydown", handleGlobalKeyDown)
     return () => window.removeEventListener("keydown", handleGlobalKeyDown)
-  }, [step, submittedEmail, submittedMessage])
+  }, [step, submittedEmail, submittedMessage, handleSubmit])
 
   // Load reCAPTCHA v3 script
   useEffect(() => {
@@ -106,7 +106,7 @@ export default function TerminalContactIntegrated() {
     setStep("email")
   }
 
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
     if (isSubmitting) return;
     
     setIsSubmitting(true);
@@ -148,7 +148,7 @@ export default function TerminalContactIntegrated() {
     } finally {
       setIsSubmitting(false);
     }
-  }
+  }, [isSubmitting, submittedEmail, submittedMessage, formStartTs])
 
   return (
     <section ref={ref} id="contact" className="mb-20 sm:mb-28 text-center">
