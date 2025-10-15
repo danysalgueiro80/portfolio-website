@@ -5,6 +5,8 @@ import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import SectionHeading from "./section-heading"
 import { useSectionInView } from "@/lib/hooks"
+import { sendEmail } from "@/actions/sendEmail"
+import toast from "react-hot-toast"
 
 export default function TerminalContactIntegrated() {
   const { ref } = useSectionInView("Contact");
@@ -15,12 +17,15 @@ export default function TerminalContactIntegrated() {
   const [submittedMessage, setSubmittedMessage] = useState("")
   const [emailError, setEmailError] = useState("")
   const [isMac, setIsMac] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formStartTs, setFormStartTs] = useState<string>("")
 
   const emailInputRef = useRef<HTMLInputElement>(null)
   const messageInputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     setIsMac(navigator.platform.toUpperCase().indexOf("MAC") >= 0)
+    setFormStartTs(String(Date.now()))
 
     const handleGlobalKeyDown = (e: KeyboardEvent) => {
       const modKey = e.metaKey || e.ctrlKey
@@ -39,6 +44,20 @@ export default function TerminalContactIntegrated() {
     window.addEventListener("keydown", handleGlobalKeyDown)
     return () => window.removeEventListener("keydown", handleGlobalKeyDown)
   }, [step, submittedEmail, submittedMessage])
+
+  // Load reCAPTCHA v3 script
+  useEffect(() => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    if (!siteKey) return; // allow local dev without key
+    const id = "recaptcha-v3-script";
+    if (document.getElementById(id)) return;
+    const script = document.createElement("script");
+    script.id = id;
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+  }, [])
 
   useEffect(() => {
     if (step === "email") {
@@ -87,24 +106,62 @@ export default function TerminalContactIntegrated() {
     setStep("email")
   }
 
-  const handleSubmit = () => {
-    console.log("[v0] Form submitted:", { email: submittedEmail, message: submittedMessage })
-    alert("Message sent successfully!")
-    handleRestart()
+  const handleSubmit = async () => {
+    if (isSubmitting) return;
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Create FormData like the original form
+      const formData = new FormData();
+      formData.set("senderEmail", submittedEmail);
+      formData.set("message", submittedMessage);
+      formData.set("formStart", formStartTs);
+      
+      // Add honeypot field (empty for real users)
+      formData.set("company", "");
+      
+      // Get reCAPTCHA token if available
+      const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+      if (siteKey && (window as any).grecaptcha) {
+        try {
+          const token: string = await (window as any).grecaptcha.execute(siteKey, { action: "contact_submit" });
+          formData.set("recaptchaToken", token);
+        } catch (err) {
+          console.warn("reCAPTCHA failed, continuing without token");
+        }
+      }
+      
+      // Send email using the same action as the original form
+      const { data, error } = await sendEmail(formData);
+      
+      if (error) {
+        toast.error(error);
+        return;
+      }
+      
+      toast.success("Email sent successfully!");
+      handleRestart();
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Failed to send email. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
     <section ref={ref} id="contact" className="mb-20 sm:mb-28 text-center">
       <SectionHeading>Contact me</SectionHeading>
 
-      <div className="rounded-2xl bg-gray-100 dark:bg-slate-900 shadow-2xl dark:shadow-none dark:border dark:border-gray-700 overflow-hidden max-w-5xl mx-auto">
+      <div className="max-w-6xl mx-auto">
+        <div className="rounded-2xl bg-gray-100 dark:bg-slate-900 shadow-2xl dark:shadow-none dark:border dark:border-gray-700 overflow-hidden max-w-[42rem] mx-auto">
         <div className="flex items-center justify-between px-6 py-4 bg-gray-200 dark:bg-slate-800/50">
           <div className="flex gap-2">
             <div className="h-3 w-3 rounded-full bg-red-500" />
             <div className="h-3 w-3 rounded-full bg-yellow-500" />
             <div className="h-3 w-3 rounded-full bg-green-500" />
           </div>
-          <div className="font-mono text-sm text-gray-700 dark:text-gray-300">contactme.here 👇</div>
           <div className="w-16" />
         </div>
 
@@ -224,8 +281,12 @@ export default function TerminalContactIntegrated() {
                 >
                   Restart
                 </Button>
-                <Button onClick={handleSubmit} className="font-mono bg-blue-400 hover:bg-blue-500 text-white">
-                  Send it!
+                <Button 
+                  onClick={handleSubmit} 
+                  disabled={isSubmitting}
+                  className="font-mono bg-blue-400 hover:bg-blue-500 text-white disabled:opacity-50"
+                >
+                  {isSubmitting ? "Sending..." : "Send it!"}
                 </Button>
               </div>
             </>
@@ -249,6 +310,7 @@ export default function TerminalContactIntegrated() {
                   </span>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>
