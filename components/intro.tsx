@@ -115,7 +115,7 @@ function getTypewriterElements() {
     "Hello, I'm Dany. I'm a ",
     <Highlight key="sfmc"><b>Salesforce Marketing Cloud</b></Highlight>,
     " consultant, with ",
-    <b key="years">3 years</b>,
+    <b key="years">4+</b>,
     " of experience in ",
     <b key="crm">data-driven CRM projects</b>,
     ". Also: proud data enthusiast."
@@ -155,12 +155,12 @@ export default function Intro() {
             }}
             >
           <Image
-            src={profilePic} 
+            src={profilePic}
             alt="Profile Picture"
             width="192"
             height="192"
-            priority={true} 
-            className="h-24 w-24 rounded-full shadow-xl"
+            priority={true}
+            className="h-24 w-24 rounded-full shadow-xl object-cover"
           />
             </motion.div>
           <motion.span className="absolute bottom-0 right-0 text-4x1"
@@ -200,7 +200,7 @@ export default function Intro() {
                 <Link href="#contact" className="group bg-gray-900 text-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 hover:bg-gray-950 active:scale-105 transition cursor-pointer border border-black/10">
                 Contact me here <BsArrowRight className="opacity-70 group-hover:translate-x-1 transition" />
             </Link>
-            <a className="group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer border border-black/10 dark:bg-white/10" href="/CVDanySalgueiro2025.pdf" download>Download CV <HiDownload className="opacity-60 group-hover:translate-y-1 transition"/> </a>
+            <a className="group bg-white px-7 py-3 flex items-center gap-2 rounded-full outline-none focus:scale-110 hover:scale-110 active:scale-105 transition cursor-pointer border border-black/10 dark:bg-white/10" href="/CV_DanySalgueiro_2026_website.pdf" download>Download CV <HiDownload className="opacity-60 group-hover:translate-y-1 transition"/> </a>
             
             <a className="bg-white p-4 text-gray-700 flex items-center gap-2 rounded-full text-[1.35rem] focus:scale-[1.15] hover:scale-[1.15] hover:text-gray-950 active:scale-105 transition border border-black/10 dark:bg-white/10 dark:text-white/60" href="https://www.linkedin.com/in/danysalgueiro/" target="_blank"><BsLinkedin /></a>
             </motion.div>
