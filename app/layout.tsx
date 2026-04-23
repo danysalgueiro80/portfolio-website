@@ -25,6 +25,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="!scroll-smooth">
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: 'history.scrollRestoration = "manual";' }} />
+      </head>
       <body
         className={`${archivo.className} bg-white relative pt-28 sm:pt-36 dark:bg-[#0F172A] dark:text-gray-50 dark:text-opacity-90`}
       >
