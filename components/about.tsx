@@ -19,14 +19,16 @@ export default function About() {
     >
       <SectionHeading>About me</SectionHeading>
       <p className="mb-3">
-      I am a portuguese tech enthusiast, currently based in{" "}
-      <b>Madrid</b>, with a strong passion <b>Data</b>, <b>CRM</b>, and the <b>Salesforce ecosystem</b>.
+        I’m a <b>Marketing Operations Consultant</b> currently based in <b>Porto, Portugal</b>. I relocated to Madrid for work, where I spent time deepening my experience in the Salesforce ecosystem before returning to Portugal.
       </p>
       <p className="mb-3">
-      My journey into technology started with a background in marketing, where I quickly realized that <b>CRM</b> was the perfect bridge between business and tech. Since then, I’ve been diving deeper into the world of <b>data</b>, marketing automation and problem-solving. I love the challenge of untangling complex issues, learning new tools, and constantly pushing myself to improve, and this website is just one of the many projects where I get to explore new technologies and skills.
+        I specialise in <b>lifecycle automation</b>, <b>CRM architecture</b>, and <b>data-driven marketing</b> — currently at Making Science, where I manage the full marketing operations stack for a <b>400K+ customer base</b>, from data ingestion and segmentation in <b>Salesforce Data Cloud</b> to multi-channel journey orchestration across email, SMS, and push.
       </p>
       <p className="mb-3">
-      When it’s time to relax, you’ll probably find me playing video games, reading, or just enjoying some downtime with family and friends.
+        My background started in marketing, but I’ve always gravitated toward the technical side — the systems, the data, and the automation logic that makes everything run. If a process is manual and repeatable, I’m probably already thinking about how to automate it.
+      </p>
+      <p className="mb-3">
+        This site is one of those side projects — built with <b>Next.js</b>, <b>TypeScript</b>, and <b>Tailwind</b>, and continuously improved as I learn new things.
       </p>
 
     </motion.section>

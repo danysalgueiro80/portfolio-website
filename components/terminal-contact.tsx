@@ -35,7 +35,7 @@ export default function TerminalContactForm() {
 
     window.addEventListener("keydown", handleGlobalKeyDown)
     return () => window.removeEventListener("keydown", handleGlobalKeyDown)
-  }, [step, submittedEmail, submittedMessage])
+  }, [step, submittedEmail, submittedMessage]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (step === "email") {

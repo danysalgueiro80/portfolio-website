@@ -8,14 +8,14 @@ import ThemeContextProvider from "@/context/theme-context";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
 
-const archivo = Archivo({ 
+const archivo = Archivo({
   subsets: ['latin'],
   display: 'swap',
 });
 
 export const metadata = {
-  title: "Dany Salgueiro | Salesforce Consultant",
-  description: "Dany is a Salesforce Consultant with 3 years of experience.",
+  title: "Dany Salgueiro | Marketing Operations Consultant",
+  description: "Dany is a Salesforce Consultant with 4+ years of experience.",
 };
 
 export default function RootLayout({

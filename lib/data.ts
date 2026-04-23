@@ -6,6 +6,7 @@ import MarketingCloudEmailSpecialist_Dany from "@/public/MarketingCloudEmailSpec
 import MarketingCloudDeveloper_Dany from "@/public/MarketingCloudDeveloper_Dany.jpg";
 import SalesforceDataCloudConsultant_Dany from "@/public/SalesforceDataCloudConsultant_Dany.png";
 import DataCampBigQuery_Dany from "@/public/DataCampBigQuery_Dany.png";
+import MarketingCloudPersonalization_Dany from "@/public/MarketingCloudPersonalization_Dany.png";
 
 export const links = [
   {
@@ -61,7 +62,7 @@ export const experiencesData = [
     title: "Campaign Specialist",
     location: "VML MAP - Lisbon",
     description:
-    "Creating and implementing HTML e-mails, with accurate targets through SQL and Adobe workflows. Working with Salesforce Marketing Cloud and Adobe Campaign Standard.",
+    "Authored and deployed HTML email campaigns with precise audience targeting via SQL and Adobe Campaign workflows. Worked across Salesforce Marketing Cloud and Adobe Campaign Standard serving Unilever.",
     icon: React.createElement(CgWorkAlt),
     date: "2022",
   },
@@ -76,7 +77,7 @@ export const experiencesData = [
     title: "Senior Solution Expert",
     location: "VML MAP - Lisbon",
     description:
-    "Managing and resolving technical issues in Salesforce Marketing Cloud. Implementing data-driven solutions, leading technical projects, and collaborating with global cross-functional teams.",
+    "Technical ownership of Salesforce Marketing Cloud operations for IKEA. Resolved complex platform issues, led data-driven lifecycle projects, and collaborated with global cross-functional teams.",
     icon: React.createElement(CgWorkAlt),
     date: "2023 - 2025",
   },
@@ -84,7 +85,7 @@ export const experiencesData = [
     title: "Salesforce Marketing Cloud Consultant",
     location: "Making Science - Madrid",
     description:
-    "Focused on Salesforce Marketing Cloud, Data Cloud and Personalization. Providing clients a holistic CRM experience.",
+    "End-to-end ownership of marketing automation for a major European energy company — lifecycle programmes, SQL-based segmentation, Salesforce Data Cloud architecture, and multi-channel journey orchestration across email, SMS, push, and web. Managing a customer base of 400K+ users.",
     icon: React.createElement(CgWorkAlt),
     date: "2025 - Present",
   },
@@ -148,6 +149,13 @@ export const certificationsData = [
     category: "Salesforce",
   },
   {
+    title: "Salesforce Marketing Cloud Personalization",
+    description: "Completed in January 2026.",
+    tags: ["Personalization", "Behavioural Tracking", "Segmentation", "Recommendations", "A/B Testing"],
+    imageUrl: MarketingCloudPersonalization_Dany,
+    category: "Salesforce",
+  },
+  {
     title: "DataCamp Introduction to BigQuery",
     description: "Completed in July 2025.",
     tags: ["BigQuery Architecture", "Cloud SQL", "Data Types", "CTEs", "Query Optimization", "DML statements"],
@@ -161,10 +169,17 @@ export const skillsData = [
   "CSS",
   "SQL",
   "AMPscript",
+  "SSJS",
   "JavaScript",
-  "APIs",
+  "JSON",
+  "REST API",
+  "SOAP API",
+  "Git",
   "Salesforce Marketing Cloud",
   "Salesforce Data Cloud",
   "Salesforce Personalization",
   "Adobe Campaign Standard",
+  "Journey Builder",
+  "Automation Studio",
+  "n8n",
 ] as const;
