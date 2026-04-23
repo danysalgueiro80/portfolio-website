@@ -190,13 +190,14 @@ export default function TerminalContactIntegrated() {
                 </div>
                 <input
                   ref={emailInputRef}
-                  type="text"
+                  type="email"
+                  inputMode="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   onKeyDown={handleKeyDown}
                   className="absolute opacity-0 w-0 h-0"
                   autoFocus
-                  autoComplete="new-password"
+                  autoComplete="email"
                   name="terminal-email-input"
                   data-form-type="other"
                 />
