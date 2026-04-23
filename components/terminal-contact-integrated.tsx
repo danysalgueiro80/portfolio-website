@@ -23,78 +23,9 @@ export default function TerminalContactIntegrated() {
   const emailInputRef = useRef<HTMLInputElement>(null)
   const messageInputRef = useRef<HTMLInputElement>(null)
 
-  useEffect(() => {
-    setIsMac(navigator.platform.toUpperCase().indexOf("MAC") >= 0)
-    setFormStartTs(String(Date.now()))
-
-    const handleGlobalKeyDown = (e: KeyboardEvent) => {
-      const modKey = e.metaKey || e.ctrlKey
-
-      if (modKey && e.key === "Enter" && step === "summary") {
-        e.preventDefault()
-        handleSubmit()
-      }
-
-      if (modKey && e.key === "k") {
-        e.preventDefault()
-        handleRestart()
-      }
-    }
-
-    window.addEventListener("keydown", handleGlobalKeyDown)
-    return () => window.removeEventListener("keydown", handleGlobalKeyDown)
-  }, [step, submittedEmail, submittedMessage, handleSubmit])
-
-  // Load reCAPTCHA v3 script
-  useEffect(() => {
-    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-    if (!siteKey) return; // allow local dev without key
-    const id = "recaptcha-v3-script";
-    if (document.getElementById(id)) return;
-    const script = document.createElement("script");
-    script.id = id;
-    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
-    script.async = true;
-    script.defer = true;
-    document.body.appendChild(script);
-  }, [])
-
-  useEffect(() => {
-    if (step === "email") {
-      emailInputRef.current?.focus()
-    } else if (step === "message") {
-      messageInputRef.current?.focus()
-    }
-  }, [step])
-
   const isValidEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     return emailRegex.test(email)
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      if (step === "email" && email.trim()) {
-        if (!isValidEmail(email.trim())) {
-          setEmailError("Invalid e-mail format. Please enter a valid e-mail address.")
-          return
-        }
-        setEmailError("")
-        setSubmittedEmail(email)
-        setStep("message")
-      } else if (step === "message" && message.trim()) {
-        setSubmittedMessage(message)
-        setStep("summary")
-      }
-    }
-  }
-
-  const handleTerminalClick = () => {
-    if (step === "email") {
-      emailInputRef.current?.focus()
-    } else if (step === "message") {
-      messageInputRef.current?.focus()
-    }
   }
 
   const handleRestart = useCallback(() => {
@@ -150,6 +81,75 @@ export default function TerminalContactIntegrated() {
     }
   }, [isSubmitting, submittedEmail, submittedMessage, formStartTs, handleRestart])
 
+  useEffect(() => {
+    setIsMac(navigator.platform.toUpperCase().indexOf("MAC") >= 0)
+    setFormStartTs(String(Date.now()))
+
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      const modKey = e.metaKey || e.ctrlKey
+
+      if (modKey && e.key === "Enter" && step === "summary") {
+        e.preventDefault()
+        handleSubmit()
+      }
+
+      if (modKey && e.key === "k") {
+        e.preventDefault()
+        handleRestart()
+      }
+    }
+
+    window.addEventListener("keydown", handleGlobalKeyDown)
+    return () => window.removeEventListener("keydown", handleGlobalKeyDown)
+  }, [step, submittedEmail, submittedMessage, handleSubmit, handleRestart])
+
+  // Load reCAPTCHA v3 script
+  useEffect(() => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+    if (!siteKey) return;
+    const id = "recaptcha-v3-script";
+    if (document.getElementById(id)) return;
+    const script = document.createElement("script");
+    script.id = id;
+    script.src = `https://www.google.com/recaptcha/api.js?render=${siteKey}`;
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+  }, [])
+
+  useEffect(() => {
+    if (step === "email") {
+      emailInputRef.current?.focus()
+    } else if (step === "message") {
+      messageInputRef.current?.focus()
+    }
+  }, [step])
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      if (step === "email" && email.trim()) {
+        if (!isValidEmail(email.trim())) {
+          setEmailError("Invalid e-mail format. Please enter a valid e-mail address.")
+          return
+        }
+        setEmailError("")
+        setSubmittedEmail(email)
+        setStep("message")
+      } else if (step === "message" && message.trim()) {
+        setSubmittedMessage(message)
+        setStep("summary")
+      }
+    }
+  }
+
+  const handleTerminalClick = () => {
+    if (step === "email") {
+      emailInputRef.current?.focus()
+    } else if (step === "message") {
+      messageInputRef.current?.focus()
+    }
+  }
+
   return (
     <section ref={ref} id="contact" className="mb-20 sm:mb-28 text-center">
       <SectionHeading>Contact me</SectionHeading>
@@ -165,7 +165,7 @@ export default function TerminalContactIntegrated() {
           <div className="w-16" />
         </div>
 
-        <div className="px-8 py-8 font-mono text-base text-gray-700 dark:text-gray-300 cursor-text" onClick={handleTerminalClick}>
+        <div className="px-8 py-8 text-base text-gray-700 dark:text-gray-300 cursor-text" onClick={handleTerminalClick}>
           <div className="flex items-center gap-2 mb-6">
             <span>Hi there! 👋 Please contact me directly here. I will reply as soon as possible.</span>
           </div>
